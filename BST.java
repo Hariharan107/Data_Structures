@@ -1,18 +1,20 @@
+import java.util.*;
 
-public class BST {
+public class BinaryTree {
     private Node root;
 
     class Node {
-        int value;
-        Node left;
         Node right;
+        Node left;
+        int value;
 
         Node(int value) {
             this.value = value;
         }
+
     }
 
-    public BST() {
+    public BinaryTree() {
         this.root = null;
     }
 
@@ -24,8 +26,9 @@ public class BST {
         }
         Node temp = root;
         while (true) {
-            if (newNode.value == temp.value)
+            if (newNode.value == temp.value) {
                 return false;
+            }
             if (newNode.value < temp.value) {
                 if (temp.left == null) {
                     temp.left = newNode;
@@ -36,19 +39,25 @@ public class BST {
                 if (temp.right == null) {
                     temp.right = newNode;
                     return true;
+
                 }
                 temp = temp.right;
             }
         }
+
     }
 
     public boolean contains(int value) {
+        if (root == null) {
+            return false;
+        }
         Node temp = root;
         while (temp != null) {
             if (value < temp.value) {
                 temp = temp.left;
             } else if (value > temp.value) {
                 temp = temp.right;
+
             } else {
                 return true;
             }
@@ -56,37 +65,16 @@ public class BST {
         return false;
     }
 
-    public int findMin() {
-        if (root == null) {
-            throw new Error("Tree is empty");
-        }
-        Node current = root;
-        while (current.left != null) {
-            current = current.left;
-        }
-        return current.value;
+    public void InOrderTraversal() {
+        InOrderTraversal(root);
     }
 
-    public int findMax() {
-        if (root == null) {
-            throw new Error("Tree is empty");
-        }
-        Node current = root;
-        while (current.right != null) {
-            current = current.right;
-        }
-        return current.value;
-    }
+    private void InOrderTraversal(Node node) {
 
-    public void inOrderTraversal() {
-        inOrderTraversal(root);
-    }
-
-    private void inOrderTraversal(Node node) {
         if (node != null) {
-            inOrderTraversal(node.left);
+            InOrderTraversal(node.left);
             System.out.print(node.value + " ");
-            inOrderTraversal(node.right);
+            InOrderTraversal(node.right);
         }
     }
 
@@ -102,38 +90,74 @@ public class BST {
         }
     }
 
-    public void postOrderTraversal() {
-        postOrderTraversal(root);
+    public void PostOrderTraversal() {
+        PostOrderTraversal(root);
     }
 
-    private void postOrderTraversal(Node node) {
+    private void PostOrderTraversal(Node node) {
         if (node != null) {
-            postOrderTraversal(node.left);
-            postOrderTraversal(node.right);
+            PostOrderTraversal(node.left);
+            PostOrderTraversal(node.right);
             System.out.print(node.value + " ");
         }
     }
 
+    public int findMin() {
+        if (root == null) {
+            throw new Error("The tree is empty");
+        }
+        Node temp = root;
+        while (temp.left != null) {
+            temp = temp.left;
+        }
+        return temp.value;
+
+    }
+
+    public int findMax() {
+        if (root == null) {
+            throw new Error("The tree is empty");
+        }
+        Node temp = root;
+        while (temp.right != null) {
+            temp = temp.right;
+        }
+        return temp.value;
+
+    }
+
     public static void main(String[] args) {
-        BST bst = new BST();
-        System.out.println("The root is : " + bst.root);
-        bst.insert(47);
-        bst.insert(21);
-        bst.insert(76);
-        bst.insert(18);
-        bst.insert(27);
-        bst.insert(82);
-        bst.insert(27);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the size of the array");
+        int n = sc.nextInt();
+        int a[] = new int[n];
+        System.out.println("Enter the elements to add : ");
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();
+        }
+        System.out.println("Enter the element to search in the tree: ");
+        int search = sc.nextInt();
+        sc.close();
+        BinaryTree bst = new BinaryTree();
+        for (int i = 0; i < n; i++) {
+            bst.insert(a[i]);
+        }
 
-        // System.out.println(bst.findMax());
-        // System.out.println(bst.findMin());
-
-        bst.inOrderTraversal();
+        System.out.print("INORDER TRAVERSAL: ");
+        bst.InOrderTraversal();
         System.out.println();
+        System.out.print("PREORDER TRAVERSAL: ");
         bst.preOrderTraversal();
         System.out.println();
-        bst.postOrderTraversal();
+        System.out.print("POSTORDER TRAVERSAL: ");
+        bst.PostOrderTraversal();
         System.out.println();
+
+        System.out.println(bst.contains(search) ? "Yes" : "No");
+        int min = bst.findMin();
+        int max = bst.findMax();
+        System.out.println("The minimum element in the tree is : " + min);
+        System.out.println("The minimum element in the tree is : " + max);
 
     }
 }
