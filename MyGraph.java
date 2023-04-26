@@ -34,17 +34,31 @@ public class MyGraph {
         return false;
     }
 
+    public boolean removeVertex(String vertex) {
+        if (adjList.get(vertex) == null)
+            return false;
+        for (String otherVertex : adjList.get(vertex)) {
+            adjList.get(otherVertex).remove(vertex);
+
+        }
+        adjList.remove(vertex);
+        return true;
+    }
+
     public static void main(String[] args) {
         MyGraph graph = new MyGraph();
         graph.addVertex("A");
         graph.addVertex("B");
         graph.addVertex("C");
+        graph.addVertex("D");
         graph.addEdge("A", "B");
         graph.addEdge("A", "C");
-        graph.addEdge("B", "C");
+        graph.addEdge("A", "D");
+        graph.addEdge("B", "D");
+        graph.addEdge("C", "D");
         // System.out.println(graph.addEdge("A", "B") ? "Added" : "not added");
         graph.printGraph();
-        graph.RemoveEdge("A", "B");
+        graph.removeVertex("D");
         graph.printGraph();
 
     }
