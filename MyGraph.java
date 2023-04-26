@@ -25,13 +25,26 @@ public class MyGraph {
         return false;
     }
 
+    public boolean RemoveEdge(String vertex1, String vertex2) {
+        if (adjList.get(vertex1) != null && adjList.get(vertex2) != null) {
+            adjList.get(vertex1).remove(vertex2);
+            adjList.get(vertex2).remove(vertex1);
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         MyGraph graph = new MyGraph();
         graph.addVertex("A");
         graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addEdge("A", "B");
+        graph.addEdge("A", "C");
+        graph.addEdge("B", "C");
+        // System.out.println(graph.addEdge("A", "B") ? "Added" : "not added");
         graph.printGraph();
-        System.out.println(graph.addEdge("A", "B") ? "Added" : "not added");
-
+        graph.RemoveEdge("A", "B");
         graph.printGraph();
 
     }
