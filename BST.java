@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class BinaryTree {
+public class BST {
     private Node root;
 
     class Node {
@@ -14,7 +14,7 @@ public class BinaryTree {
 
     }
 
-    public BinaryTree() {
+    public BST() {
         this.root = null;
     }
 
@@ -125,6 +125,26 @@ public class BinaryTree {
         return temp.value;
 
     }
+    public ArrayList<Integer> BFS() {
+        Node currNode = root;
+        Queue<Node> queue = new LinkedList<>();
+        ArrayList<Integer> result = new ArrayList<>();
+        if (currNode != null)
+            queue.add(currNode);
+        while (!queue.isEmpty()) {
+            currNode = queue.remove();
+            result.add(currNode.value);
+            if (currNode.left != null) {
+                queue.add(currNode.left);
+            }
+            if (currNode.right != null) {
+                queue.add(currNode.right);
+            }
+        }
+        return result;
+    }
+
+
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -138,11 +158,15 @@ public class BinaryTree {
         System.out.println("Enter the element to search in the tree: ");
         int search = sc.nextInt();
         sc.close();
-        BinaryTree bst = new BinaryTree();
+        BST bst = new BST();
         for (int i = 0; i < n; i++) {
             bst.insert(a[i]);
         }
-
+        ArrayList<Integer> result = bst.BFS();
+        System.out.println("BFS: ");
+        for (int num : result)
+            System.out.print(num + " ");
+        System.out.println();
         System.out.print("INORDER TRAVERSAL: ");
         bst.InOrderTraversal();
         System.out.println();
