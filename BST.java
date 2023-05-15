@@ -125,6 +125,7 @@ public class BST {
         return temp.value;
 
     }
+
     public ArrayList<Integer> BFS() {
         Node currNode = root;
         Queue<Node> queue = new LinkedList<>();
@@ -144,7 +145,22 @@ public class BST {
         return result;
     }
 
-
+    public ArrayList<Integer> DFS() {
+        ArrayList<Integer> result = new ArrayList<>();
+        class Traverse {
+            Traverse(Node currNode) {
+                result.add(currNode.value);
+                if (currNode.left != null) {
+                    new Traverse(currNode.left);
+                }
+                if (currNode.right != null) {
+                    new Traverse(currNode.right);
+                }
+            }
+        }
+        new Traverse(root);
+        return result;
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -162,9 +178,14 @@ public class BST {
         for (int i = 0; i < n; i++) {
             bst.insert(a[i]);
         }
-        ArrayList<Integer> result = bst.BFS();
+        ArrayList<Integer> bfs = bst.BFS();
         System.out.println("BFS: ");
-        for (int num : result)
+        for (int num : bfs)
+            System.out.print(num + " ");
+        System.out.println();
+        ArrayList<Integer> dfs = bst.DFS();
+        System.out.println("DFS: ");
+        for (int num : dfs)
             System.out.print(num + " ");
         System.out.println();
         System.out.print("INORDER TRAVERSAL: ");
