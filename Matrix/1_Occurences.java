@@ -1,8 +1,6 @@
 import java.util.*;
 
 public class test {
-    private static final String Map = null;
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
