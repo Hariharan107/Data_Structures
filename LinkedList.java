@@ -8,12 +8,10 @@ public class LinkedList {
     class Node {
         int value;
         Node next;
-
         Node(int value) {
             this.value = value;
         }
     }
-
     // public LinkedList(int value) {
     // Node newNode = new Node(value);
     // head = newNode;
@@ -169,38 +167,45 @@ public class LinkedList {
 
     }
 
+    // public void reverse() {
+    // if (length <= 1) {
+    // return;
+    // }
+    // Node previousNode = null;
+    // Node currentNode = head;
+    // Node nextNode = null;
+    // while (currentNode != null) {
+    // nextNode = currentNode.next;
+    // currentNode.next = previousNode;
+    // previousNode = currentNode;
+    // currentNode = nextNode;
+    // }
+    // tail = head;
+    // head = previousNode;
+    // }
     public void reverse() {
-        if (length <= 1) {
+        if (length <= 1)
             return;
+        Node temp = head;
+        head = tail;
+        tail = temp;
+        Node after = temp.next;
+        Node before = null;
+        for (int i = 0; i < length; i++) {
+            after = temp.next;
+            temp.next = before;
+            before = temp;
+            temp = after;
         }
-        Node previousNode = null;
-        Node currentNode = head;
-        Node nextNode = null;
-        while (currentNode != null) {
-            nextNode = currentNode.next;
-            currentNode.next = previousNode;
-            previousNode = currentNode;
-            currentNode = nextNode;
-        }
-        tail = head;
-        head = previousNode;
     }
 
     public void createLoop(int index) {
         if (head == null || index >= length)
             return;
-        Node current = head;
-        Node loopStart = null;
-        for (int i = 0; i < length; i++) {
-            if (i == index) {
-                loopStart = current;
-            }
-            if (i == length - 1) {
-                current.next = loopStart;
-            }
-            current = current.next;
+        Node loop = get(index);
+        if (loop != null)
+            loop.next = head;
 
-        }
     }
 
     public boolean hasLoop() {
@@ -237,6 +242,25 @@ public class LinkedList {
         return null;
     }
 
+    public void removeDuplicates() {
+        if (head == null)
+            return;
+        Node current = head;
+        while (current != null) {
+            Node runner = current;
+            while (runner.next != null) {
+                if (runner.next.value == current.value) {
+                    runner.next = runner.next.next;
+                    length--;
+                } else {
+                    runner = runner.next;
+                }
+
+            }
+            current = current.next;
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter array size: ");
@@ -251,15 +275,11 @@ public class LinkedList {
         for (int i = 0; i < size; i++) {
             myLinkedList.append(array[i]);
         }
-        Node result = myLinkedList.Search(5);
-        if (result == null) {
-            System.out.println("Node not found.");
-        } else {
-            System.out.println(result.value);
-        }
-
-        // myLinkedList.createLoop(3);
-        // System.out.println(myLinkedList.hasLoop());
-        scanner.close();
+        myLinkedList.printList();
+        
+        // myLinkedList.reverse();
+        // // System.out.print("List after removing duplicates: ");
+        // myLinkedList.printList();
+        // scanner.close();
     }
 }
