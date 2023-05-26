@@ -8,6 +8,7 @@ public class LinkedList {
     class Node {
         int value;
         Node next;
+
         Node(int value) {
             this.value = value;
         }
@@ -28,6 +29,7 @@ public class LinkedList {
 
     public void printList() {
         Node temp = head;
+        System.out.println();
         while (temp != null) {
             System.out.print(temp.value + " ");
             temp = temp.next;
@@ -242,9 +244,10 @@ public class LinkedList {
         return null;
     }
 
-    public void removeDuplicates() {
+    public void removeDuplicates(Node head) {
         if (head == null)
             return;
+
         Node current = head;
         while (current != null) {
             Node runner = current;
@@ -261,22 +264,101 @@ public class LinkedList {
         }
     }
 
+    // public LinkedList mergeLinkedList(LinkedList list1, LinkedList list2) {
+    // if (list1.length == 0) {
+    // return list2;
+    // }
+    // if (list2.length == 0) {
+    // return list1;
+    // }
+    // LinkedList mergedList = new LinkedList();
+    // Node Current1 = list1.head;
+    // Node Current2 = list2.head;
+    // while (Current1 != null && Current2 != null) {
+    // if (Current1.value < Current2.value) {
+    // mergedList.append(Current1.value);
+    // Current1 = Current1.next;
+    // } else if (Current2.value < Current1.value) {
+    // mergedList.append(Current2.value);
+    // Current2 = Current2.next;
+    // } else if (Current1.value == Current2.value) {
+    // mergedList.append(Current1.value);
+    // Current1 = Current1.next;
+    // Current2 = Current2.next;
+    // }
+
+    // }
+    // while (Current1 != null) {
+    // mergedList.append(Current1.value);
+    // Current1 = Current1.next;
+    // }
+    // while (Current2 != null) {
+    // mergedList.append(Current2.value);
+    // Current2 = Current2.next;
+    // }
+
+    // return mergedList;
+
+    //
+    public void merged(LinkedList list1, LinkedList list2) {
+        Node temp = list1.tail;
+        temp.next = list2.head;
+        // Node runner = list1.head;
+        // while (runner != null) {
+        // System.out.print(runner.value + " ");
+        // runner = runner.next;
+        // }
+    }
+
+    public void sort(Node head) {
+        Node current = head;
+        Node next;
+        while (current != null) {
+            next = current.next;
+
+            while (next != null) {
+                if (current.value > next.value) {
+                    int temp = current.value;
+                    current.value = next.value;
+                    next.value = temp;
+                }
+                next = next.next;
+            }
+            current = current.next;
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter array size: ");
         int size = scanner.nextInt();
         int[] array = new int[size];
-
         System.out.print("Enter array elements: ");
         for (int i = 0; i < size; i++) {
             array[i] = scanner.nextInt();
         }
         LinkedList myLinkedList = new LinkedList();
+
         for (int i = 0; i < size; i++) {
             myLinkedList.append(array[i]);
         }
+        scanner.close();
+        LinkedList myLinkedList1 = new LinkedList();
+        myLinkedList1.append(23);
+        myLinkedList1.append(243);
+        myLinkedList1.append(223);
+        myLinkedList1.append(13);
+        myLinkedList1.append(3);
+        // myLinkedList1.printList();
+        // myLinkedList.printList();
+        myLinkedList.merged(myLinkedList, myLinkedList1);
+        myLinkedList.removeDuplicates(myLinkedList.head);
+        myLinkedList.sort(myLinkedList.head);
         myLinkedList.printList();
-        
+        // myLinkedList
+        // merged.removeDuplicates();
+        // merged.sort(merged);
+        // merged.printList();
         // myLinkedList.reverse();
         // // System.out.print("List after removing duplicates: ");
         // myLinkedList.printList();
