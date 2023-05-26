@@ -49,11 +49,11 @@ public class DoubleLinked {
     }
 
     public void prepend(int val) {
+        Node newNode = new Node(val);
         if (head == null) {
-            return;
+            head = newNode;
+            tail = newNode;
         } else {
-
-            Node newNode = new Node(val);
             newNode.next = head;
             head.prev = newNode;
             head = newNode;
@@ -210,18 +210,42 @@ public class DoubleLinked {
         if (index == length - 1) {
             return removeLast();
         }
-        // Other Method
+        // Other Methodk
         // Node temp = get(index);
         // temp.next.prev = temp.prev;
         // temp.prev.next = temp.next;
         // temp.next=null;
         // tem.prev=null;
         Node before = get(index - 1);
-        Node after = before.next.next;
+        Node after = before.next.next;k
         before.next = after;
         after.prev = before;
         length--;
         return before;
+    }
+
+    public void removeDuplicates() {
+        if (head == null) {
+            return;
+        }
+        Node current = head;
+        while (current != null) {
+            Node runner = current;
+            while (runner.next != null) {
+                if (runner.next.value == current.value) {
+                    runner.next = runner.next.next;
+                    if (runner.next != null) {
+                        runner.next.prev = runner;
+                    } else {
+                        tail = runner;
+                    }
+                    length--;
+                } else {
+                    runner = runner.next;
+                }
+            }
+            current = current.next;
+        }
     }
 
     public static void main(String[] args) {
@@ -238,7 +262,7 @@ public class DoubleLinked {
             dll.append(arr[i]);
         }
         dll.printList();
-        dll.removeItem(3);
+        dll.removeDuplicates();
         dll.printList();
 
         sc.close();
