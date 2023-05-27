@@ -300,14 +300,20 @@ public class LinkedList {
     // return mergedList;
 
     //
-    public void merged(LinkedList list1, LinkedList list2) {
-        Node temp = list1.tail;
-        temp.next = list2.head;
-        // Node runner = list1.head;
-        // while (runner != null) {
-        // System.out.print(runner.value + " ");
-        // runner = runner.next;
-        // }
+    public void merge(LinkedList list1, LinkedList list2) {
+        if (list1.head == null) {
+            head = list2.head;
+        } else if (list2.head == null) {
+            head = list1.head;
+        } else {
+            head = list1.head;
+            list1.tail.next = list2.head;
+        }
+        if (list2.tail != null) {
+            tail = list2.tail;
+        } else {
+            tail = list1.tail;
+        }
     }
 
     public void sort(Node head) {
@@ -315,7 +321,6 @@ public class LinkedList {
         Node next;
         while (current != null) {
             next = current.next;
-
             while (next != null) {
                 if (current.value > next.value) {
                     int temp = current.value;
@@ -351,9 +356,10 @@ public class LinkedList {
         myLinkedList1.append(3);
         // myLinkedList1.printList();
         // myLinkedList.printList();
-        myLinkedList.merged(myLinkedList, myLinkedList1);
-        myLinkedList.removeDuplicates(myLinkedList.head);
-        myLinkedList.sort(myLinkedList.head);
+
+        myLinkedList.merge(myLinkedList, myLinkedList1);
+        // myLinkedList.removeDuplicates(myLinkedList.head);
+        // myLinkedList.sort(myLinkedList.head);
         myLinkedList.printList();
         // myLinkedList
         // merged.removeDuplicates();
