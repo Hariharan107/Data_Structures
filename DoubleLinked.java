@@ -138,32 +138,43 @@ public class DoubleLinked {
     public void sortList() {
 
         // Node current will point to head
-        Node current = head, index = null;
-
+        Node current = head;
+        Node next;
         int temp;
 
-        if (head == null) {
-            return;
-        } else {
-            while (current != null) {
-                // Node index will point to node next to
-                // current
-                index = current.next;
+        while (current != null) {
+            next = current.next;
 
-                while (index != null) {
-                    // If current node's value is greater
-                    // than index's node value, swap the value
-                    // between them
-                    if (current.value > index.value) {
-                        temp = current.value;
-                        current.value = index.value;
-                        index.value = temp;
-                    }
-
-                    index = index.next;
+            while (next != null) {
+                // If current node's value is greater
+                // than index's node value, swap the value
+                // between them
+                if (current.value > next.value) {
+                    temp = current.value;
+                    current.value = next.value;
+                    next.value = temp;
                 }
-                current = current.next;
+
+                next = next.next;
             }
+            current = current.next;
+        }
+    }
+
+    public void mergeList(DoubleLinked d1, DoubleLinked d2) {
+        if (d1.head == null) {
+            head = d2.head;
+        } else if (d2.head == null) {
+            head = d1.head;
+        } else {
+            head = d1.head;
+            d1.tail.next = d2.head;
+            d2.head.prev = d1.tail;
+        }
+        if (d2.tail != null) {
+            tail = d2.tail;
+        } else {
+            tail = d1.tail;
         }
     }
 
@@ -217,7 +228,7 @@ public class DoubleLinked {
         // temp.next=null;
         // tem.prev=null;
         Node before = get(index - 1);
-        Node after = before.next.next;k
+        Node after = before.next.next;
         before.next = after;
         after.prev = before;
         length--;
@@ -262,9 +273,11 @@ public class DoubleLinked {
             dll.append(arr[i]);
         }
         dll.printList();
-        dll.removeDuplicates();
+        dll.sortList();
+        // dll.removeDuplicates();
         dll.printList();
-
+        // dll.sortList();
+        // dll.printList();
         sc.close();
     }
 }
